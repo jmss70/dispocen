@@ -1,0 +1,1823 @@
+---
+title: "Proyecto centralex"
+output:
+  word_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+always_allow_html: yes
+---
+*Store this file in the same directory where your data is stored
+# Carga de librerías
+```{r message = FALSE, warning = FALSE}
+library(centralex)
+```
+# Carga de datos
+```{r}
+data <- read.centralex("datos.txt")
+data %>% 
+  head() %>% 
+  flextable() %>% autofit() %>% 
+  theme_booktabs()
+```
+
+# Modelo de disponibilidad
+```{r}
+disponibilidad <- build.avilasanchez.availability(data)
+disponibilidad %>% 
+  head() %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+## Centros de interés
+### Centro de interés: 01
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="01") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="01") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 02
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="02") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="02") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 03
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="03") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="03") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 04
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="04") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="04") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 05
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="05") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="05") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 06
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="06") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="06") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 07
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="07") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="07") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 08
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="08") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="08") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 09
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="09") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="09") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 10
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="10") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="10") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 11
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="11") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="11") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 12
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="12") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="12") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 13
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="13") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="13") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 14
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="14") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="14") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 15
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="15") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="15") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 16
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="16") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="16") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 17
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="17") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="17") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 18
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="18") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="18") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 19
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="19") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="19") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+### Centro de interés: 20
+```{r eval=FALSE}
+disponibilidad %>% 
+  filter(centers=="20") %>% 
+  arrange(-availability) %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabra", 
+                    order="Orden", 
+                    availability="Disponibilidad", 
+                    freq.abs="Frecuencia absoluta", 
+                    freq.abs.cum="Frecuencia absoluta acumulada", 
+                    freq.rel="Frecuencia relativa", 
+                    freq.rel.cum="Frecuencia relativa acumulada")  %>% 
+  colformat_num(j=c(4,6,8), digits=6)  %>% 
+  width(j=c(1,3,5,7),width=.65)  %>% 
+  width(j=c(2,4,6,8),width=.9) %>% 
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>% 
+  filter(centers=="20") %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+## Visión general de los centros de interés
+```{r}
+disponibilidad %>%
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability)) + geom_line() + facet_wrap(~centers)  +
+  xlab("Secuencia de palabras (por grado descendente de compatibilidad)") + 
+  ylab("Disponibilidad")
+```
+
+# Grupos de compatiblidad
+```{r}
+levels <- classify.availability.levels(disponibilidad)
+```
+```{r}
+clasificacion <- build.availability.levels(levels)
+```
+
+## Centros de interés
+### Centro de interés: 01
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="01") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="01") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="01") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="01") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 02
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="02") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="02") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="02") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="02") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 03
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="03") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="03") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="03") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="03") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 04
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="04") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="04") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="04") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="04") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 05
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="05") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="05") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="05") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="05") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 06
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="06") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="06") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="06") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="06") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 07
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="07") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="07") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="07") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="07") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 08
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="08") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="08") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="08") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="08") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 09
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="09") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="09") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="09") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="09") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 10
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="10") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="10") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="10") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="10") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 11
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="11") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="11") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="11") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="11") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 12
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="12") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="12") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="12") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="12") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 13
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="13") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="13") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="13") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="13") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 14
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="14") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="14") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="14") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="14") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 15
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="15") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="15") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="15") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="15") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 16
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="16") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="16") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="16") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="16") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 17
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="17") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="17") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="17") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="17") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 18
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="18") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="18") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="18") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="18") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 19
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="19") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="19") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="19") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="19") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+### Centro de interés: 20
+```{r eval=FALSE}
+levels %>% 
+   arrange(-availability) %>%
+   select(-order) %>%
+  filter(centers=="20") %>% 
+   flextable() %>% 
+   set_header_labels(centers = "Centro de interés", 
+                     words="Palabra", 
+                     availability="Disponibilidad",
+                     level="Nivel de disponibilidad",
+                     cutlevel="Nivel de corte",
+                     freq.abs="Frecuencia absoluta", 
+                     freq.abs.cum="Frecuencia absoluta acumulada", 
+                     freq.rel="Frecuencia relativa", 
+                     freq.rel.cum="Frecuencia relativa acumulada") %>% 
+   colformat_num(j=c(5,7,9), digits=5)  %>% 
+   width(j=c(1,4,6,8),width=.65)  %>% 
+   width(j=c(2,3,5,6,7,9),width=.75)  %>% 
+   theme_booktabs()
+```
+ 
+```{r}
+levels %>%
+  filter(centers=="20") %>% 
+  mutate(level=factor(level)) %>% 
+  arrange(-availability) %>% 
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad")
+```
+
+```{r}
+clasificacion %>%
+  filter(level > 0) %>%
+  filter(centers=="20") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```
+```{r eval=FALSE}
+clasificacion %>% 
+  filter(level == 0) %>%
+  filter(centers=="20") %>% 
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    words="Palabras",  
+                    level="Nivel de disponibilidad", 
+                    count="Recuento") %>% 
+  width(j=c(1,2,3),width=.75) %>% 
+  width(j=4,width=4) %>% 
+  align(j=4,align="right") %>% 
+  theme_booktabs() 
+```

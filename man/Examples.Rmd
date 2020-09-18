@@ -1,0 +1,307 @@
+---
+title: "Ejemplo de análisis de Displex"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+# Modelos de datos
+
+Hay varios trabajos y modelos que se han ido refinando progresivamente para responder a la cuestión de la relevancia del vocabulario. En este trabajo se intenta estudiar el modelo subyacente a tales aproximaciones y se propone una generalización para la construcción de un modelo general que permita representar de la forma más ajustada y abierta posible la evaluación de los modelos de disponibilidad.
+
+Para ello, este documento se establece como un ejemplo de aplicación de la librería que se ha utilizado para este trabajo, así como de discusión y justificación de las propuestas anteriores y presentes.
+
+```{r}
+install.packages("devtool")
+library(devtools)
+install.packages("tidyverse")
+install_github("jmss70/displex")
+```
+
+
+```{r}
+install.packages("devtools")
+library(tidyverse)
+library(displex)
+```
+
+Se ha construido una función que carga los datos en la forma que es habitual representar en este tipo de estudios
+
+```{r}
+d <- read.displex("../datos.txt")
+head(d)
+```
+Para cada usuario y centro de interés se carga una lista de palabras en el orden en el que se ha realizado
+```{r}
+d[1,]$words
+```
+
+
+Se ha puesto a disposición una función, displex_availability, que permite integrar la información del marco de datos de una forma general y que permite el uso de diferentes paradigmas, que se desarrollarán y discutirán a continuación.
+
+Algunos ejemplos de aplicación para el cálculo de la disponibilidad aplicando diferentes modelos. En todos ellos se añade la representación de las curvas de disponibilidad (en orden decreciente) para los diferentes centros de interés que se han tenido en cuenta.
+
+## Ejemplo 1
+
+Valores por defecto (que no por ellos más relevantes) proporcionados por las librerías. Se aplica una ley de Zipf como ley de evaluación de cada prueba y la agregación aditiva como modelo de agregacióin de los datos.
+
+```{r}
+dd <- displex_availability(d)
+dd %>% arrange(-availability) %>% ggplot(aes(x=seq_along(words),y=availability)) + geom_line() + facet_wrap(~centers)
+```
+
+```{r}
+dd %>% filter(centers=="01") %>% arrange(-availability) %>% head(10)
+```
+Es posible observar que hay grupos de valores, bastante extensos, que tienen disponibilidad 1.
+
+## Ejemplo 2
+
+Una ley de compatibilidad de cada prueba de Zipft, pero se usa como agregación una media. Se puede observar cómo cambian los rangos de los datos.
+
+```{r}
+dd <- displex_availability(d,reduce=mean)
+dd %>% arrange(-availability) %>% ggplot(aes(x=seq_along(words),y=availability)) + geom_line() + facet_wrap(~centers)
+```
+
+```{r}
+dd %>% filter(centers=="01") %>% arrange(-availability) %>% head(20)
+```
+
+## Ejemplo 3
+
+Una ley de compatibilidad de cada prueba de Zipft, que empieza por 1/2 (por defecto empieza por el valor 1), usando como agregación una media. Se puede observar cómo cambian los rangos de los datos.
+
+```{r}
+dd <- displex_availability(d,law=function(x) {displex_zipf_law(x,d=0)},reduce=mean)
+dd %>% arrange(-availability) %>% ggplot(aes(x=seq_along(words),y=availability)) + geom_line() + facet_wrap(~centers)
+```
+
+```{r}
+dd %>% filter(centers=="01") %>% arrange(-availability) %>% head(20)
+```
+
+## Ejemplo 4
+Una ley exponencial, $1/2^n$, con ley de agregación la media
+
+```{r}
+dd <- displex_availability(d,law=displex_exp_law,reduce=mean)
+dd %>% arrange(-availability) %>% ggplot(aes(x=seq_along(words),y=availability)) + geom_line() + facet_wrap(~centers)
+```
+
+`
+
+```{r}
+dd %>% filter(centers=="01") %>% arrange(-availability) %>% head(20)
+```
+
+## Ejemplo 5
+
+Una ley de agregación exponencial, con ley de agregación la adición probabilística
+
+```{r}
+dd <- displex_availability(d,law=displex_exp_law,reduce=displex_additive_law)
+dd %>% arrange(-availability) %>% ggplot(aes(x=seq_along(words),y=availability)) + geom_line() + facet_wrap(~centers)
+```
+
+```{r}
+nn <- dd %>% filter(centers=="01") %>% arrange(-availability)
+nn  %>% head(20)
+```
+```{r}
+dd %>% filter(centers=='01') %>% arrange(-availability) %>% ggplot(aes(x=seq_along(words),y=availability)) + geom_line() + facet_wrap(~centers)
+```
+
+## Un caso particular
+
+La fórmula principalmente propuesta hasta ahora ha sido la que enunciaron Lopez-Strasburger, basada en el recuendo del número de veces que aparece una palabra en una determinada posición, e integrando esa información mediante una ponderación según una exponencial, con un parámetro que, generalmente, se evalúa como -2.3.
+
+Este desarrollo se podría reconstruir como:
+
+
+```{r}
+d <- read.displex("../datos.txt")
+d <- d %>% filter(centers=="01")
+# Recopilamos todas las palabras y sus posiciones en las listas
+words = c()
+pos   = c()
+for (i in seq_along(d$words)) {
+  words = c(words,d$words[i][[1]])
+  pos   = c(pos,seq_along(d$words[i][[1]]))
+}
+
+# Organizamos las palabras y sus posiciones en una tabla
+x <- table(words,pos)
+x 
+```
+
+Esta información se integra mediante una ponderación por factores exponenciales, dando lugar a
+
+```{r}
+getMaxLength <- function(d) {
+  max(vapply(d$words, function(x) {length(x)}, FUN.VALUE=1L))
+}
+
+# Máxima posición alcanzada
+n <- getMaxLength(d)
+# Número total de hablantes
+N <- length(unique(d$users))
+
+m <- exp(-2.3*(seq_along(1:n) - 1) / (n-1))
+dl <- apply(x,1,function(a) {sum(a * m / N)})
+dl <- data.frame(words=names(dl), availability =dl)  %>% arrange(-availability)
+dl %>% head(20)
+```
+
+Es posible demostrar que este proceso es una aplicación particular del modelo general que proponemos, utilizando como evaluación de cada muestra una ley exponencial adaptada, que hemos denominado lopez_law, y como agregación una media ponderada:
+
+```{r}
+
+lopez_law <- function(w) {
+  exp(-2.3*(seq_along(w)-1)/(n-1))
+}
+
+# Se calcula la disponibilidad de cada término aplicando el modelo exponencial de López y reduciendo mediante un promedio por hablantes
+dd <- displex_availability(d,law=lopez_law,reduce=function (x) {sum(x) / N})
+dd %>% arrange(-availability) %>% head(40)
+```
+
+
+
+
+```{r}
+dd %>% arrange(-availability) %>% ggplot(aes(x=seq_along(words),y=availability)) + geom_line() 
+```
+
+```{r}
+nn$order <- seq_along(nn$words)
+dl$order <- seq_along(dl$words)
+ddd <- inner_join(nn,dl,by="words") %>% mutate(diff = order.x-order.y) %>% rename(availability.el = availability.x, order.el=order.x, availability.lo = availability.y, order.lo = order.y)
+ddd
+```
+
+```{r}
+barplot(table(ddd$diff))
+```
+
+```{r}
+ddd$absdiff <- abs(ddd$diff)
+ddd %>% ungroup() %>% arrange(-absdiff) %>% select(words, diff, order.el, order.lo)
+```
+
+```{r}
+ddd %>% ggplot(aes(x=order.el,order.lo)) + geom_point(aes(color=absdiff))
+```
+
+
+El color muestra la diferencia en el orden de clasificación de los palabros por el método que hemos propoesto nosotros (conjuntos difuso basados en una ley exponencial y aglutinación mediante ley probabilística -- order.y) y el método propuesto por López (el formulaco de las narices --- order.y). El color significa la diferencia entre las dos posiciones. Se puede ver cómo en los que están en primeras posiciones y en últimos predomina el color oscuro, que significa poca o ninguna diferencia de posición. Las diferencias, como cabe esperar, se encuentra en los puntos interemedios. 
+
+Es posible observar que hay una relación bastante lineal entre ambos modelos de evaluación. Y, además, en los valores extremos (mucha disponibilidad o poca disponibilidad) los evalúan de forma similar. Por tanto, representan, básicamente, la misma información.
+
+
+Representando, en lugar del orden los valores de disponibilidad obtenidos, se observa, de nuevo un fenómeno similar. Los valores muy disponibles se identifican con los dos modelos.
+
+```{r}
+ddd %>% ggplot(aes(x=availability.el,availability.lo)) + geom_point(aes(color=absdiff))
+```
+
+
+# Integral de Sugeno
+
+El concepto de media o promedio en Estadística se modeliza a través del concepto de integral que, como su propio nombre indica, integra los valores de al variable ponderando por su importancia relativa, que se cuantifica como una distribución de frecuencia o probabilidad. Representa así un punto de equilibrio entre los distintos valores.
+
+En el ámbito de las medidas difusas existe un concepto parecido, que corresponde con la integral de Sugeno de una función sobre un conjunto difuso respecto a una medida sobre el conjunto permite un punto de equilibrio entre los valores proporcionados a los valores del conjunto, mediante una función que los clasifica en grado de compatibiliad, en nuestro caso la disponibilidad obtenida, frente a una medida difusa sobre los conjuntos a que toman valr  ***IBI***
+
+Para calcular un punto característico, en el cual se encuentre un equilibrio entre el tamaño de la población seleccionada y su relevancia, se puede tomar en consideración el Fuzzy Expected Value. En este caso, puesto que se quiere encontrar un punto de equilibrio entre el tamaño de la muestra y los valores 
+
+
+## Calculo de los grupos de elementos característicos
+
+
+
+```{r}
+d <- read.displex("../datos.txt")
+dd <- displex_availability(d,law=displex_exp_law,reduce=displex_additive_law)
+dd <- dd %>% filter(centers=="01") %>% arrange(-availability)
+dd
+```
+```{r}
+d <- dd$availability
+g <- function(x) {length(x) / length(d)}
+h <- function(x) {x}
+
+vals <- h(d)
+levels <- sort(unique(vals), decreasing=TRUE)
+
+# Determine alpha cuts and its measure
+gs <- sapply(levels,function(x) {g(d[vals >= x])})
+
+data.frame(levels  = levels, measures = gs) %>% 
+  ggplot(aes(x=seq_along(levels), y=levels))  + 
+  geom_line() + 
+  geom_line(aes(x=seq_along(levels), y=gs))
+```
+
+```{r}
+d <- dd$availability
+g <- function(x) {sqrt(length(x) / length(d))}
+h <- function(x) {x}
+
+vals <- h(d)
+levels <- sort(unique(vals), decreasing=TRUE)
+
+# Determine alpha cuts and its measure
+gs <- sapply(levels,function(x) {g(d[vals >= x])})
+
+data.frame(levels  = levels, measures = gs) %>% 
+  ggplot(aes(x=seq_along(levels), y=levels))  + 
+  geom_line() + 
+  geom_line(aes(x=seq_along(gs), y=gs))
+```
+
+```{r}
+sugeno.integral <- function(d, g=function(x) {length(x)/length(d)}, h=function(x) {x}) {
+  # Calculate by function, and the levels for alpha
+  vals <- h(d)
+  levels <- sort(unique(vals), decreasing=TRUE)
+  # Determine alpha cuts and its measure
+  gs <- sapply(levels,function(x) {g(d[vals >= x])})
+  res  <- cbind(levels,gs)
+  res <- max(apply(res,1,min))
+  res
+}
+
+sugeno.integral(d)
+```
+```{r}
+dd$words[dd$availability > sugeno.integral(dd$availability)]
+```
+
+```{r}
+sugeno.integral(d,h = function(x) {sqrt(x)})
+```
+```{r}
+dd$words[dd$availability > sugeno.integral(dd$availability,h = function(x) {sqrt(x)})]
+```
+
+
+```{r}
+dd$words[dd$availability > sugeno.integral(dd$availability,h = function(x) {sqrt(sqrt(x))})]
+```
+
+```{r}
+d <- read.displex("../datos.txt")
+dd <- displex_availability(d,law=lopez_law,reduce=function (x) {sum(x) / N})
+dd <- dd %>% filter(centers=="01")
+dd$words[dd$availability >= sugeno.integral(dd$availability)]
+```
+
+
+```{r}
+dd$words[dd$availability > sugeno.integral(dd$availability,h = function(x) {sqrt(x)})]
+```
+
+
+```{r}
+dd$words[dd$availability > sugeno.integral(dd$availability,h = function(x) {sqrt(sqrt(x))})]
+```
+

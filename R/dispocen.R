@@ -69,7 +69,7 @@ build.availability <- function(data,law=exponential.law, reduce=additive.reduce.
   new.data <-
     left_join(new.data, total_by_center, by="centers") %>%
     mutate(freq.rel=freq.abs/counttotal) %>%
-    arrange(-freq.rel) %>%
+    arrange(-availability) %>%
     group_by(centers) %>%
     mutate(freq.abs.cum = cumsum(freq.abs), freq.rel.cum = cumsum(freq.rel)) %>%
     ungroup() %>%

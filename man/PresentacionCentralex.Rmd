@@ -100,6 +100,7 @@ La función general del cálculo de la disponibilidad es `build.availability`. S
 Este modelo, que es el más conocido y el último de una serie de iteraciones para la cuantificación de la disponibilidad, se puede usar como:
 ```{r}
 disponibilidad <- build.lopezstrass.availability(data)
+disponibilidad
 ```
 El resultado es un nuevo marco de datos cuyos campos son el centro de interés, la palabra y la disponibilidad calculada, junto con otros datos necesarios para su obtención como la posición y las frecuencias relativas y acumuladas dentro del centro de interés:
 ```{r}
@@ -144,7 +145,8 @@ disponibilidad %>%
   filter(centers=="03") %>% 
   arrange(-availability) %>% 
   ggplot(aes(x=order, y=availability)) + geom_line() +
-  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+  xlab("Sucesión de palabras") + ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
 ```
 
 ## Modelo de Ávila-Sánchez
@@ -186,7 +188,8 @@ disponibilidad %>%
   filter(centers=="03") %>% 
   arrange(-availability) %>% 
   ggplot(aes(x=order, y=availability)) + geom_line() +
-  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+  xlab("Sucesión de palabras") + ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
 ```
 
 Debido a las características de los operadores aditivos de la teoría de los conjuntos difusos, es posible que la forma de la curva obtenida para el cálculo de la disponibilidad clásica: quizás no aparezcan términos con valores cercanos a 1 (por ejemplo, si se tienen pocos datos y estos son relativamente dispersos) o, por el contrario, encontremos demasiados términos con valoraciones cercanas a 1 (por ejemplo, si se trabaja con muchas muestras). Aunque las opciones anteriores son improbables, pero posibles, hemos optado por regular la curva mediante un parámetro adicional, `k`, que va a modificar la curva (ascendente-descendente), pero manteniendo su forma y clasificación. El valor por defecto de `k` es 1. Si se da un valor entre 0 y 1, la curva bajará (menos términos con valores cercanos a 1), mientras que si a `k` se le da un valor mayor que la unidad la curva subirá (más términos cercanos a la unidad).
@@ -197,7 +200,8 @@ disponibilidad %>%
   filter(centers=="03") %>% 
   arrange(-availability) %>% 
   ggplot(aes(x=order, y=availability)) + geom_line() +
-  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+  xlab("Sucesión de palabras") + ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
 ```
 
 El resultado final será, en cualquier caso, un nuevo marco de datos con la disponibilidad de cada término en cada centro de interés
@@ -207,7 +211,8 @@ disponibilidad %>%
   filter(centers=="03") %>% 
   arrange(-availability) %>% 
   ggplot(aes(x=seq_along(availability), y=availability)) + geom_line() +
-  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+  xlab("Sucesión de palabras") + ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
 ```
 
 Téngase en cuenta que los ejemplos mostrados representan de forma artificial, manipulada y consciente, valores muy extremos usados a modo de exposición. En nuestras pruebas, realizadas siempre con datos reales procedentes de investigaciones previas, hemos encontrado que el valor de referencia ofrece resultados adecuados en todos los casos que hemos encontrado.
@@ -270,7 +275,8 @@ levels %>%
   arrange(-availability) %>% 
   ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
   xlab("Posición del término en el centro de interés") +
-  ylab("Disponibilidad")
+  ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
 ```
 
 
@@ -298,10 +304,12 @@ clasificacion %>%
 ```{r}
 levels %>%
   mutate(level=factor(level)) %>% 
+  filter(centers %in% c("01","02","03","04")) %>%
   arrange(-availability) %>% 
   ggplot(aes(x=order,y=availability,color=level)) + geom_line() + facet_wrap(~centers)  +
   xlab("Secuencia de palabras (por grado descendente de compatibilidad)") + 
-  ylab("Disponibilidad")
+  ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
 ```
 
 # Herramienta propuesta
@@ -425,7 +433,8 @@ dispComp %>%
 
 ```{r}
 dispComp %>%
-  ggplot(aes(x=avHombres,y=avMujeres,color=centers)) + geom_point()
+  ggplot(aes(x=avHombres,y=avMujeres,color=centers)) + geom_point() +
+  theme_bw() + scale_colour_grey()
 ```
 
 Según este gráfico es posible observar que los términos muy disponibles y poco disponibles tienden a ser similares. Sin embargo, los términos que aparecen en los diversos niveles intermedios pueden variar de forma muy significativa.
@@ -470,7 +479,8 @@ levelsSexo <-
 levelsSexo %>%
   filter(levelHombre != levelMujer) %>%
   mutate(diffLevel=factor(abs(levelHombre-levelMujer))) %>%
-  ggplot(aes(x=avHombre,y=avMujer,color=diffLevel)) + geom_point()
+  ggplot(aes(x=avHombre,y=avMujer,color=diffLevel)) + geom_point() +
+  theme_bw() + scale_colour_grey()
 ```
 
 Se puede observar que en la mayor parte de los casos en los que se clasifican en niveles distintos, lo hacen con poca diferencia. 

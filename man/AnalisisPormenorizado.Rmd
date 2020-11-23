@@ -6,62 +6,30 @@ output:
   word_document: default
 ---
 
-En este artículo se presenta una implementación sobre el sistema de análisis estadístico R para el estudio de la disponibilidad léxica. Se ha optado por hacer la herramienta disponible mediante el repositorio GitHub.com, que permite la creación de adaptaciones y permitirá que este proyecto pueda avanzar, haciendolo disponible publicamente, tanto a nivel de uso como de implementación.
+# Introducción
 
-Se ha optado por hacer una exposición que, simultáneamente, sea un ejemplo de uso. Creemos que de esta forma la exposición se hará más amena y útil para el que quiera aplicar las herramientas que proporcionamos.
+One century ago, lexical availability studies raised as a way to identify relevant vocabulary. Necessity of formal background that enforce the elections was soon found relevant. Since then, quantitative models for expressing the relevancy of the words into a interest center has been developed.
 
-# Instalación
+The last of a serie of modifications is the proposition of López-Strassbuger formula, which offers a nice quantitative approximation to evaluation of lexical centrality and relevance of words in a so-called "interest center".
 
-Como se comenta arriba, se ha optado por el uso del repositorio GitHub.com. Esto implica que el usuario debe llevar a cabo un pequeño paso de instalación que, en nuestra opinión, no es más complejo que cualquier proceso de instalación en el sistema R. Este paso ha de hacerse únicamente cuando se pretenda instalar o actualizar el paquete en el sistema. Puesto que nuestra intención es seguir trabajando en el paquete, sería recomendable realizar esta acción de forma periódica.
+In Ávila-Sánchez a new approach of this subject is proposed. Actually, it's just a revision of the concepts treated in previous works and focusing in developing a model based approach to the process of evaluation. In this order, a new interpretation of the availability tests is called. More than a availability studies, tests are a prototyping identification tests. A prototype is offered to the speaker as a entry point to their lexical network. This is not a criticism to the probe or validity of studies, but a way to get a deeper understanding about what's happening. 
 
-Las siguientes órdenes instalan el paquete Displex del repositorio GitHub. Todo el código está implementado en R, con lo que es fácil de revisar.
-```{r}
-# install.packages("devtools")
-```
+Next, some concepts are revised and options offered that could be used to evaluate the availability tests and will be compared with the previously proposed ones, in concept and performance.
 
-```{r}
-#library(devtools)
-#install_github("jmss70/displex")
-```
+# What's the objetive of a availability study
 
-Se recomienda el uso del universo TidyVerse para el análisis de datos, ya que proporciona herramientas con una sintaxis muy potente que facilita enormemente la tarea de análisis y representación de datos.
-```{r}
-# install.packages("tidyverse")
-```
+May be that this is the more important concept that we have to consider, because "what's" determine the subject of the work and the target of study.
 
-Llevados a cabo los pasos anteriores, y si no se ha producido ningún contratiempo, el sistema está preparado para llevar a cabo el trabajo.
+In availability tests a starting concept is offered to a speaker, in order to find out which is the vocabulary that is close related to that concept. At this way, the vocabulary from a central concept relevant to a social group is identified. This information could be used to optimize learning process, automatic systems, etc.
 
-# Carga de las librerías y los datos
+Tests are traditionally built around enumerations of terms around the entry concept. It's presumed that  more relevant terms are enunciated sooner than less relevant ones. This is a key concept. Position of terms in lists obtained from each speaker for each interest center is relevant and provide a descendant relevance for each term.
 
-Para poder usar las librerías hay que cargarlas en nuestra sesión de trabajo, poniendo a nuestra disposición las funciones que proporcionan:
-```{r}
-library(tidyverse)
-library(displex)
-```
+These are traditional cheap and easy tests, but in more sharper studies more information could be added to the system. For example, time when terms are realized. With computer systems it could be possible to obtain that information. Could be informative to realize that a speaker stop enunciating terms and start again after a gap. In previous tests we have observed that speakers went farther and farther from the "center" of the proposed entry point, then returned near to the center and started again the same process.
 
-Para cargar los datos, se espera que estén en un determinado formato, utilizado por ser el que habitualmente se encuentra en este tipo de estudios, creemos que por razones históricas. Sin embargo, consideramos que son redundantes y que habría que estudiar, en un futuro cercano, establecer un estandard de codificación que sea más coherente con los modelos de datos normalizados.
+So, we consider that it's important to split evaluation process in two main parts:
 
-Se espera que los datos estén en un archivo de texto, con campos separados por espacios:
-- Un campo de información del hablante
-- Un campo de identificación de usuario
-- Un campo de identificación de centro de interés
-- Una lista de palabras separadas por comas y en orden de realización
-
-Un ejemplo de dos líneas sería:
-
-    21131 001 01 mano, pie, brazo, cerebro, pulmón, nariz, extremidad, ojo, boca, diente, pelo, oreja, culo, vagina 
-    12131 002 01 riñón, corazón, garganta, cabeza, pierna, pie, hígado, estómago, mano, brazo, antebrazo, abdomen, pecho, ojo, boca, oído, dedo, rodilla, costilla 
-
-Suponiendo que tenemos todos los datos cargados en un archivo, denominado `datos.txt`, que estará alojado en el mismo directorio que el script de procesamiento, se podrían cargar los datos como:
-
-```{r}
-d <- read.displex("datos.txt")
-head(d)
-```
-Para cada usuario y centro de interés se carga una lista de palabras en el orden en el que se ha realizado
-```{r}
-d[1,]$words
-```
+* At first, evaluate each list (with the available information) to provide a evaluation of the relevance of each term in that list.
+* The, integrate that information of each speaker in each interest center in order to obtain a global representation of the 
 
 # Modelo de datos
 

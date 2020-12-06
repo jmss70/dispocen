@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: José María Sánchez Sáez
 Maintainer: José María Sánchez Sáez <jmss@uma.es>
 Description: Disponibility tests are usually used for determining the lexical easily available to a group of people, around a central concept called "interest point."
-License: What license is it under?
+License: GNU GENERAL PUBLIC LICENSE, Version 3
 Encoding: UTF-8
 LazyData: true
 Depends: stringr, dplyr, tidyverse, flextable, kableExtra, shiny

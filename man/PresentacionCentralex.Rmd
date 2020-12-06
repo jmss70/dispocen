@@ -100,7 +100,6 @@ La función general del cálculo de la disponibilidad es `build.availability`. S
 Este modelo, que es el más conocido y el último de una serie de iteraciones para la cuantificación de la disponibilidad, se puede usar como:
 ```{r}
 disponibilidad <- build.lopezstrass.availability(data)
-disponibilidad
 ```
 El resultado es un nuevo marco de datos cuyos campos son el centro de interés, la palabra y la disponibilidad calculada, junto con otros datos necesarios para su obtención como la posición y las frecuencias relativas y acumuladas dentro del centro de interés:
 ```{r}

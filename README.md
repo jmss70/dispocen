@@ -2,6 +2,8 @@
 
 This is the main respository of the Dispocen r-package, a library of functions focused on the lexicographic availability analysis by interest centers.
 
+Dispocen is distributed under GPL version 3 (or we tried to do it).
+
 Software requeriments:
 
 * https://cloud.r-project.org/

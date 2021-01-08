@@ -15,3 +15,7 @@ In order to install it, execute in a R prompt:
     install.packages("devtools")
     library(devtools)
     install_github("jmss70/dispocen")
+
+
+# Introductory video
+https://www.youtube.com/watch?v=IU5VfUvG4Ag

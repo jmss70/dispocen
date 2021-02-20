@@ -16,6 +16,14 @@ In order to install it, execute in a R prompt:
     library(devtools)
     install_github("jmss70/dispocen")
 
+# Remark
+In R 4.0.4 we have found neccessary, in order to load devtools, install previously cachem. So,  the order to install is:
+
+    install.packages("devtools")
+    install.packages("cachem")
+    library(devtools)
+    install_github("jmss70/dispocen")
+
 
 # Introductory video
 https://www.youtube.com/watch?v=IU5VfUvG4Ag

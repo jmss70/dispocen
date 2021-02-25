@@ -141,8 +141,9 @@ fuzzy.expected.value <- function(d, g=function(x) {length(x)/length(d)}, h=funct
 # Label each word in each interest center in order to build levels of centrality
 # data -> Availability data.frame as returned by build.avilability
 # levels -> numbers of levels to clasify vocabulary
+# showcutlevels -> show cut levels
 # returns -> a new data.frame, similar to input, but with labeled levels
-classify.availability.levels <- function(data, levels=6) {
+classify.availability.levels <- function(data, levels=6,showcutlevels=FALSE) {
   #new.data <- data %>% select(centers,words,order,availability)
   new.data <- data
   new.data$cutlevel = 0
@@ -170,11 +171,15 @@ build.availability.levels <- function(data) {
     mutate(level=strtoi(level))
   dmt$count <- lapply(dmt$words, function(x) {length(unlist(x))}) %>% unlist
   dmt$words <- lapply(dmt$words, function(x){paste(x,collapse=", ")})
-  merge(dmt %>%
-        select(centers,level,count,words) %>%
-        arrange(centers,-level),
-        data %>% select(centers,level,cutlevel) %>% unique(),
-        by=c("centers", "level"))
+  if (showcutlevels) {
+    merge(dmt %>%
+          select(centers,level,count,words) %>%
+          arrange(centers,-level),
+          data %>% select(centers,level,cutlevel) %>% unique(),
+          by=c("centers", "level"))
+  } else {
+    dmt
+  }
 }
 
 

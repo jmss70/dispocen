@@ -113,7 +113,7 @@ head(disponibilidad) %>%
                     freq.abs.cum="Frecuencia absoluta acumulada", 
                     freq.rel="Frecuencia relativa", 
                     freq.rel.cum="Frecuencia relativa acumulada") %>%
-  colformat_num(j=c(4,6,8), digits=6) %>%
+  colformat_double(j=c(4,6,8), digits=6) %>%
   width(j=c(1,3,5,7),width=.65) %>%
   width(j=c(2,4,6,8),width=.9) %>%
   theme_booktabs()
@@ -133,7 +133,7 @@ disponibilidad %>%
                     freq.abs.cum="Frecuencia absoluta acumulada", 
                     freq.rel="Frecuencia relativa", 
                     freq.rel.cum="Frecuencia relativa acumulada") %>%
-  colformat_num(j=c(4,6,8), digits=6) %>%
+  colformat_double(j=c(4,6,8), digits=6) %>%
   width(j=c(1,3,5,7),width=.65) %>%
   width(j=c(2,4,6,8),width=.9) %>%
   theme_booktabs()
@@ -176,7 +176,7 @@ disponibilidad %>%
                     freq.abs.cum="Frecuencia absoluta acumulada", 
                     freq.rel="Frecuencia relativa", 
                     freq.rel.cum="Frecuencia relativa acumulada") %>%
-  colformat_num(j=c(4,6,8), digits=6) %>%
+  colformat_double(j=c(4,6,8), digits=6) %>%
   width(j=c(1,3,5,7),width=.65) %>%
   width(j=c(2,4,6,8),width=.9) %>%
   theme_booktabs()
@@ -237,7 +237,7 @@ levels %>%
                     freq.abs.cum="Frecuencia absoluta acumulada", 
                     freq.rel="Frecuencia relativa", 
                     freq.rel.cum="Frecuencia relativa acumulada") %>%
-  colformat_num(j=c(5,7,9), digits=5) %>%
+  colformat_double(j=c(5,7,9), digits=5) %>%
   width(j=c(1,4,6,8),width=.65) %>%
   width(j=c(2,3,5,6,7,9),width=.75) %>%
   theme_booktabs()
@@ -259,7 +259,7 @@ levels %>%
                     freq.abs.cum="Frecuencia absoluta acumulada", 
                     freq.rel="Frecuencia relativa", 
                     freq.rel.cum="Frecuencia relativa acumulada") %>%
-  colformat_num(j=c(3,5,7,9), digits=5) %>%
+  colformat_double(j=c(3,5,7,9), digits=5) %>%
   width(j=c(1,4,6,8),width=.65) %>%
   width(j=c(2,3,5,6,7,9),width=.75) %>%
   theme_booktabs()
@@ -438,9 +438,11 @@ dispComp %>%
 
 Según este gráfico es posible observar que los términos muy disponibles y poco disponibles tienden a ser similares. Sin embargo, los términos que aparecen en los diversos niveles intermedios pueden variar de forma muy significativa.
 ```{r}
-levelsHombres <- classify.availability.levels(disponibilidadHombres)
+levelsHombres <- 
+  classify.availability.levels(disponibilidadHombres)
 clasificacionHombres <- build.availability.levels(levelsHombres)
-levelsMujeres <- classify.availability.levels(disponibilidadMujeres)
+levelsMujeres <- 
+  classify.availability.levels(disponibilidadMujeres)
 clasificacionMujeres <- build.availability.levels(levelsMujeres)
 clasificacionSexo <-
   inner_join(clasificacionHombres %>%
@@ -453,6 +455,7 @@ clasificacionSexo <-
   
 clasificacionSexo %>%
   filter(level> 0)  %>%
+  filter(centers %in% c("01", "02", "03", "04")) %>%
   flextable() %>% 
   set_header_labels(centers = "Centro de interés", 
                     wordsHombres="Palabras hombres", 

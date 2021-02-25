@@ -1,0 +1,365 @@
+---
+title: "R Notebook"
+output:
+  word_document: default
+  html_notebook: default
+---
+
+pag 12
+```{r eval=FALSE}
+install.packages("devtools")
+library(devtools)
+install_github("jmss70/dispocen")
+```
+pag 13
+```{r}
+library(dispocen)
+```
+
+
+```{r}
+data <- read.dispocen("datos.txt")
+data %>%
+  head() %>%
+  flextable() %>% autofit() %>%
+  theme_booktabs()
+```
+
+pag 14
+```{r}
+disponibilidad <- build.lopezstrass.availability(data)
+```
+
+```{r}
+head(disponibilidad) %>%
+  flextable() %>%
+  set_header_labels(centers = "Centro de interés",
+                    words = "Palabra",
+                    order = "Orden",
+                    availability = "Disponibilidad",
+                    freq.abs = "Frecuencia absoluta",
+                    freq.abs.cum = "Frecuencia absoluta acumulada",
+                    freq.rel = "Frecuencia relativa",
+                    freq.rel.cum = "Frecuencia relativa acumulada") %>%
+  colformat_double(j=c(4,6,8), digits=6) %>%
+  width(j=c(1,3,5,7),width=.65) %>%
+  width(j=c(2,4,6,8),width=.9) %>%
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>%
+  filter(centers=="03") %>%
+  arrange(-availability) %>%
+  head(10) %>%
+  flextable() %>%
+  set_header_labels(centers = "Centro de interés",
+                    words = "Palabra",
+                    order = "Orden",
+                    availability = "Disponibilidad",
+                    freq.abs = "Frecuencia absoluta",
+                    freq.abs.cum = "Frecuencia absoluta acumulada",
+                    freq.rel = "Frecuencia relativa",
+                    freq.rel.cum = "Frecuencia relativa acumulada") %>%
+  colformat_double(j=c(4,6,8), digits=6) %>%
+  width(j=c(1,3,5,7),width=.65) %>%
+  width(j=c(2,4,6,8),width=.9) %>%
+  theme_booktabs()
+```
+
+
+```{r}
+disponibilidad %>%
+  filter(centers=="03") %>%
+  arrange(-availability) %>%
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+
+```{r}
+disponibilidad <- build.avilasanchez.availability(data)
+```
+
+
+
+```{r}
+disponibilidad %>%
+  filter(centers=="03") %>%
+  arrange(-availability) %>%
+  head(10) %>%
+  flextable() %>%
+  set_header_labels(centers = "Centro de interés",
+    words="Palabra",
+    order="Orden",
+    availability="Disponibilidad",
+    freq.abs="Frecuencia absoluta",
+    freq.abs.cum="Frecuencia absoluta acumulada",
+    freq.rel="Frecuencia relativa",
+    freq.rel.cum="Frecuencia relativa acumulada") %>%
+  colformat_double(j=c(4,6,8), digits=6) %>%
+  width(j=c(1,3,5,7),width=.65) %>%
+  width(j=c(2,4,6,8),width=.9) %>%
+  theme_booktabs()
+```
+
+```{r}
+disponibilidad %>%
+  filter(centers=="03") %>%
+  arrange(-availability) %>%
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+
+```{r}
+disponibilidad <- build.avilasanchez.availability(data, k = 0.1)
+disponibilidad %>%
+  filter(centers=="03") %>%
+  arrange(-availability) %>%
+  ggplot(aes(x=order, y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+```{r}
+disponibilidad <- build.avilasanchez.availability(data, k = 2)
+disponibilidad %>%
+  filter(centers=="03") %>%
+  arrange(-availability) %>%
+  ggplot(aes(x=seq_along(availability), y=availability)) + geom_line() +
+  xlab("Sucesión de palabras") + ylab("Disponibilidad")
+```
+
+```{r}
+disponibilidad <- build.avilasanchez.availability(data)
+levels <- classify.availability.levels(disponibilidad)
+levels %>%
+  head(20) %>%
+  arrange(-availability) %>%
+  select(-order) %>%
+  flextable() %>%
+  set_header_labels(centers = "Centro de interés",
+                    words = "Palabra",
+                    availability = "Disponibilidad",
+                    level="Nivel de disponibilidad",
+                    cutlevel="Nivel de corte",
+                    freq.abs="Frecuencia absoluta",
+                    freq.abs.cum="Frecuencia absoluta acumulada",
+                    freq.rel="Frecuencia relativa",
+                    freq.rel.cum="Frecuencia relativa acumulada") %>%
+   colformat_double(j=c(5,7,9), digits=5) %>%
+   width(j=c(1,4,6,8),width=.65) %>%
+   width(j=c(2,3,5,6,7,9),width=.75) %>%
+   theme_booktabs()
+```
+
+```{r}
+levels %>%
+  filter(centers=="01") %>%
+  arrange(-availability) %>%
+  filter(level > 0) %>%
+  select(-order) %>%
+  flextable() %>%
+  set_header_labels(centers = "Centro de interés",
+                    words="Palabra",
+                    availability="Disponibilidad",
+                    level="Nivel de disponibilidad",
+                    cutlevel="Nivel de corte",
+                    freq.abs="Frecuencia absoluta",
+                    freq.abs.cum="Frecuencia absoluta acumulada",
+                    freq.rel="Frecuencia relativa",
+                    freq.rel.cum="Frecuencia relativa acumulada") %>%
+  colformat_double(j=c(3,5,7,9), digits=5) %>%
+  width(j=c(1,4,6,8),width=.65) %>%
+  width(j=c(2,3,5,6,7,9),width=.75) %>%
+  theme_booktabs()
+```
+
+```{r}
+levels %>%
+  filter(centers=="04") %>%
+  mutate(level=factor(level)) %>%
+  arrange(-availability) %>%
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() +
+  xlab("Posición del término en el centro de interés") +
+  ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
+```
+
+```{r}
+clasificacion <- build.availability.levels(levels)
+clasificacion %>%
+  filter(level> 0) %>% filter(centers %in% c("01","02","03","04")) %>%
+  flextable() %>%
+  set_header_labels(centers = "Centro de interés",
+                    words="Palabras",
+                    level="Nivel de disponibilidad",
+                    count="Recuento") %>%
+  width(j=c(1,2,3),width=.75) %>%
+  width(j=4,width=4) %>%
+  align(i=4,align="right") %>%
+  theme_booktabs()
+```
+
+
+
+
+```{r}
+levels %>%
+mutate(level=factor(level)) %>%
+  filter(centers %in% c("01","02","03","04")) %>%
+  arrange(-availability) %>%
+  ggplot(aes(x=order,y=availability,color=level)) + geom_line() + facet_wrap(~centers) +
+  xlab("Secuencia de palabras (por grado descendente de compatibilidad)") +
+  ylab("Disponibilidad") +
+  theme_bw() + scale_colour_grey()
+```
+
+```{r eval=FALSE}
+library(dispocen)
+dispocen::runUtility()
+```
+
+```{r}
+bs <- read.csv("BaseSociologica.csv", colClasses = "character")
+bs <- bs %>%
+  mutate(EDAD=strtoi(EDAD),
+         AÑOSDEESTUDIO = strtoi(AÑOSDEESTUDIO)) %>%
+  rename(GÉNERO=SEXO)
+bs %>%
+  head() %>%
+  select(SUJETO,GÉNERO,EDAD,AÑOSDEESTUDIO) %>%
+  flextable() %>%
+  autofit()
+```
+
+```{r}
+idHombres <-
+  bs %>%
+  filter(GÉNERO=="1") %>%
+  select(SUJETO) %>%
+  unlist()
+idHombres
+```
+
+
+```{r}
+idMujeres <-
+  bs %>%
+  filter(GÉNERO=="0") %>%
+  select(SUJETO) %>%
+  unlist()
+idMujeres
+```
+
+```{r}
+data %>%
+  filter(users %in% idMujeres) %>%
+  head()
+```
+
+```{r}
+data %>%
+  filter(users %in% idHombres) %>%
+  head()
+```
+
+
+
+```{r}
+disponibilidadHombres <- build.avilasanchez.availability(data %>%
+  filter(users %in% idHombres))
+head(disponibilidadHombres) %>%
+  select(centers, words, availability) %>%
+  flextable() %>%
+  autofit()
+```
+
+```{r}
+disponibilidadMujeres <- build.avilasanchez.availability(data %>%
+  filter(users %in% idMujeres))
+head(disponibilidadMujeres) %>%
+  select(centers, words, availability) %>%
+  flextable() %>%
+  autofit()
+```
+
+
+```{r}
+dispComp <-
+  inner_join(disponibilidadHombres %>%
+               select(centers,words,availability) %>%
+               rename(avHombres=availability),
+             disponibilidadMujeres %>%
+               select(centers,words,availability) %>%
+               rename(avMujeres=availability),
+             by = c("centers", "words"))
+dispComp %>%
+  head() %>%
+  flextable() %>%
+  autofit()
+```
+```{r}
+dispComp %>%
+  ggplot(aes(x=avHombres,y=avMujeres,color=centers)) + geom_point() +
+  theme_bw() + scale_colour_grey()
+```
+
+```{r}
+levelsHombres <- 
+  classify.availability.levels(disponibilidadHombres)
+clasificacionHombres <- build.availability.levels(levelsHombres)
+levelsMujeres <- 
+  classify.availability.levels(disponibilidadMujeres)
+clasificacionMujeres <- build.availability.levels(levelsMujeres)
+clasificacionGenero <-
+  inner_join(clasificacionHombres %>%
+               select(centers,level,words) %>%
+               rename(wordsHombres=words),
+             clasificacionMujeres %>%  
+               select(centers,level,words) %>%
+               rename(wordsMujeres=words), 
+           by=c("centers","level")) 
+  
+clasificacionGenero %>%
+  filter(level> 0)  %>%
+  filter(centers %in% c("01", "02", "03", "04")) %>%
+  flextable() %>% 
+  set_header_labels(centers = "Centro de interés", 
+                    wordsHombres="Palabras hombres", 
+                    wordsMujeres="Palabras mujeres", 
+                    level="Nivel de disponibilidad",
+                    count="Recuento") %>%
+  width(j=c(1,2),width=.75) %>%
+  width(j=c(3,4),width=2.5) %>%
+  align(j=c(3,4),align="right") %>%
+  theme_booktabs()
+```
+
+```{r}
+levelsGenero <-
+  inner_join(levelsHombres %>%
+               select(centers,level,words,availability) %>%
+               rename(avHombre=availability,levelHombre=level),
+             levelsMujeres %>%  
+               select(centers,level,words,availability) %>%
+               rename(avMujer=availability,levelMujer=level), 
+           by=c("centers","words")) 
+levelsGenero %>%
+  filter(levelHombre != levelMujer) %>%
+  mutate(diffLevel=factor(abs(levelHombre-levelMujer))) %>%
+  ggplot(aes(x=avHombre,y=avMujer,color=diffLevel)) + geom_point() +
+  theme_bw() + scale_colour_grey()
+```
+
+```{r}
+diffs <- tapply(levelsGenero$levelHombre == levelsGenero$levelMujer,
+                levelsGenero$centers, mean) * 100
+diffs
+```
+
+
+```{r}
+summary(diffs)
+```
+

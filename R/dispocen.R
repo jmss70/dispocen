@@ -171,14 +171,15 @@ build.availability.levels <- function(data, showcutlevels=FALSE) {
   dmt$count <- lapply(dmt$words, function(x) {length(unlist(x))}) %>% unlist
   dmt$words <- lapply(dmt$words, function(x){paste(x,collapse=", ")})
   dmt <- dmt %>%
-    select(centers,level,count,words) %>%
-    arrange(centers,-level)
+    select(centers,level,count,words)
   if (showcutlevels) {
     merge(dmt,
           data %>% select(centers,level,cutlevel) %>% unique(),
-          by=c("centers", "level"))
+          by=c("centers", "level")) %>%
+      arrange(centers,-level)
   } else {
-    dmt
+    dmt %>%
+      arrange(centers,-level)
   }
 }
 

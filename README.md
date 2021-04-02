@@ -24,6 +24,12 @@ In R 4.0.4 we have found neccessary, in order to load devtools, install previous
     library(devtools)
     install_github("jmss70/dispocen")
 
+In R 4.0.5 we have found neccesary, in order to load devtools, install previously testthat. So, the order to install is:
+
+    install.packages("testthat")
+    install.packages("cachem")
+    library(devtools)
+    install_github("jmss70/dispocen")
 
 # Introductory video
 https://www.youtube.com/watch?v=IU5VfUvG4Ag

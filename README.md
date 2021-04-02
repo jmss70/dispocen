@@ -10,6 +10,10 @@ Software requeriments:
 * https://rstudio.com/products/rstudio/download/
 * https://cran.r-project.org/bin/windows/Rtools/
 
+It's recommended to upgrade all the packages previously to install any new package. So, execute:
+
+    update.packages(ask=FALSE)
+   
 In order to install it, execute in a R prompt:
 
     install.packages("devtools")
@@ -17,6 +21,8 @@ In order to install it, execute in a R prompt:
     install_github("jmss70/dispocen")
 
 # Remark
+
+
 In R 4.0.4 we have found neccessary, in order to load devtools, install previously cachem. So,  the order to install is:
 
     install.packages("devtools")

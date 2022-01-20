@@ -161,7 +161,7 @@ classify.availability.levels <- function(data, levels=6) {
 # Reduce data.frame to a
 build.availability.levels <- function(data, showcutlevels=FALSE) {
   #mt <- tapply(data$words, list(data$centers,data$level),c,simplify=FALSE)
-  mt <- tapply(data$words, list(data$centers,data$level),c,simplify=FALSE)
+  mt <- tapply(data$words, list(data$centers,data$level),paste0,simplify=FALSE)
   dmt <- data.frame(mt)
   names(dmt) <- colnames(mt)
   dmt$centers <- rownames(dmt)

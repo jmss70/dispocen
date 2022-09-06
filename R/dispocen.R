@@ -169,7 +169,7 @@ build.availability.levels <- function(data, showcutlevels=FALSE) {
     pivot_longer(-centers,names_to="level", values_to="words") %>%
     mutate(level=strtoi(level))
   dmt$count <- lapply(dmt$words, function(x) {length(unlist(x))}) %>% unlist
-  dmt$words <- lapply(dmt$words, function(x){paste(x,collapse=", ")})
+  dmt$words <- lapply(dmt$words, function(x){paste(x,collapse=", ")}) %>% unlist
   dmt <- dmt %>%
     select(centers,level,count,words)
   if (showcutlevels) {

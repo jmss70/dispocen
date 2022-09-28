@@ -32,9 +32,9 @@ In R 4.0.4 we have found neccessary, in order to load devtools, install previous
 
 In R 4.0.5 we have found neccesary, in order to load devtools, install previously testthat. So, the order to install is:
 
-    install.packages("devtools")
     install.packages("testthat")
     install.packages("cachem")
+    install.packages("devtools")
     library(devtools)
     install_github("jmss70/dispocen")
 

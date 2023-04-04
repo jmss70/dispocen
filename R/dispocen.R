@@ -49,7 +49,7 @@ read.dispocen <- function(file) {
   words   = list()
 
   for (i in seq_along(f)) {
-    a <- str_match(f[i], "^(\\d+) (\\d+) (\\d+) (.+)$")[-1]
+    a <- str_match(f[i], "^([:alnum:]+)[:blank:]+([:alnum:]+)[:blank:]+([:alnum:]+) (.+)$")[-1]
     infos[length(infos)+1] = a[1]
     users[length(users)+1] = a[2]
     centers[length(centers)+1] = a[3]
